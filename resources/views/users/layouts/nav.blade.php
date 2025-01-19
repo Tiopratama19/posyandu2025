@@ -34,9 +34,43 @@
         background-color: white;
     }
 
-    /* Tambahkan styling untuk dropdown */
+    /* Dropdown Styling */
     .dropdown-menu {
         min-width: 200px;
+        background-color: #2ac0c0;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .dropdown-menu.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .dropdown-item {
+        color: white;
+        padding: 12px 16px;
+        transition: background-color 0.2s ease;
+    }
+
+    .dropdown-item:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .dropdown-toggle::after {
+        content: '\f0d7';  /* Arrow down icon */
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        padding-left: 5px;
+    }
+
+    .dropdown-toggle {
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
     }
 
     /* Responsif untuk ukuran layar kecil (di bawah 992px) */
@@ -50,7 +84,6 @@
             margin: 5px 0;
         }
 
-        /* Dropdown menyesuaikan posisi */
         .dropdown-menu {
             left: auto;
             right: 0;
@@ -130,3 +163,12 @@
         </div>
     </div>
 </nav>
+
+<script>
+    const dropdownToggle = document.getElementById('userDropdown');
+    const dropdownMenu = dropdownToggle.nextElementSibling;
+
+    dropdownToggle.addEventListener('click', function () {
+        dropdownMenu.classList.toggle('show');
+    });
+</script>
