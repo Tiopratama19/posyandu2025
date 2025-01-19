@@ -1,0 +1,18 @@
+HTTrack3.49-2+htsswf+htsjava launched on Thu, 09 Nov 2023 13:31:16 at https://themesdesign.in/dason-laravel/layouts/default/index.html +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+(winhttrack -qwC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)" -%F "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2014], %s -->" -%l "en, *" https://themesdesign.in/dason-laravel/layouts/default/index.html -O1 "C:\magang_skripsi\skripsi\public\template1" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+13:33:03	Warning: 	File not parsed, looks like binary: https://themesdesign.in/dason-laravel/layouts/default/assets/fonts/materialdesignicons-webfont.woff2?v=5.9.55
+13:33:03	Warning: 	File not parsed, looks like binary: https://themesdesign.in/dason-laravel/layouts/default/assets/fonts/boxicons.woff2
+13:33:05	Warning: 	File not parsed, looks like binary: https://themesdesign.in/dason-laravel/layouts/default/assets/fonts/fa-brands-400.woff2
+13:33:05	Warning: 	File not parsed, looks like binary: https://themesdesign.in/dason-laravel/layouts/default/assets/fonts/fa-regular-400.woff2
+13:33:05	Warning: 	File not parsed, looks like binary: https://themesdesign.in/dason-laravel/layouts/default/assets/fonts/fa-solid-900.woff2
+13:33:06	Error: 	"Not Found" (404) at link https://themesdesign.in/dason-laravel/layouts/default/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css (from https://themesdesign.in/dason-laravel/layouts/default/tasks-create.html)
+13:33:06	Error: 	"Not Found" (404) at link https://themesdesign.in/dason-laravel/layouts/default/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js (from https://themesdesign.in/dason-laravel/layouts/default/tasks-create.html)
+
+HTTrack Website Copier/3.49-2 mirror complete in 1 minutes 52 seconds : 315 links scanned, 312 files written (27847257 bytes overall) [16334509 bytes received at 145843 bytes/sec], 15093762 bytes transferred using HTTP compression in 221 files, ratio 23%, 35.0 requests per connection
+(2 errors, 5 warnings, 0 messages)
