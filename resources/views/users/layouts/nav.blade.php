@@ -163,12 +163,3 @@
         </div>
     </div>
 </nav>
-
-<script>
-    const dropdownToggle = document.getElementById('userDropdown');
-    const dropdownMenu = dropdownToggle.nextElementSibling;
-
-    dropdownToggle.addEventListener('click', function () {
-        dropdownMenu.classList.toggle('show');
-    });
-</script>

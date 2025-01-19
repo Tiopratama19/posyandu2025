@@ -156,19 +156,19 @@
                                     <div class="mb-3">
                                         <label for="" class="form-label">Nik</label>
                                         <input type="text" name="nik" id="nik" class="form-control" pattern="\d{16}"
-                                            onkeypress="return hanyaAngka(event)" required value="{{ auth()->user()->nik }}" readonly>
+                                            onkeypress="return hanyaAngka(event)" required value="{{ auth()->check() ? auth()->user()->nik : 'guest' }}" readonly>
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Email</label>
                                         <input type="email" name="email" id="email" class="form-control"
-                                            aria-describedby="emailHelp" value="{{ auth()->user()->email }}" readonly>
+                                            aria-describedby="emailHelp" value="{{ auth()->check() ? auth()->user()->email : 'guest' }}" readonly>
                                         <div id="emailHelp" class="form-text">Kami tidak akan pernah membagikan
                                             email Anda kepada orang lain.</div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Nama</label>
                                         <input type="text" name="nama" id="nama" class="form-control"
-                                            aria-describedby="emailHelp" value="{{ auth()->user()->name }}" readonly>
+                                            aria-describedby="emailHelp" value="{{ auth()->check() ? auth()->user()->name : 'guest' }}" readonly>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"

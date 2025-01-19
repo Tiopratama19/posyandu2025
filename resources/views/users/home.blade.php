@@ -2,18 +2,21 @@
     body {
         font-family: 'Poppins', sans-serif;
         margin: 0;
+        padding: 0;
     }
 
     .hero-section {
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 100vh;
+        height: 100vh;
+        /* Membatasi tinggi section dengan tinggi layar */
         text-align: center;
         background: linear-gradient(270deg, #00c6ff, #0072ff);
         background-size: 400% 400%;
         animation: gradientAnimation 10s ease infinite;
         color: white;
+        position: relative;
     }
 
     h1,
@@ -21,19 +24,20 @@
         margin: 0;
         opacity: 0;
         animation-fill-mode: forwards;
+        animation-duration: 1.5s;
     }
 
     h1 {
         font-size: 3em;
         font-weight: 600;
-        animation: fadeInDown 1.5s ease-in-out forwards;
+        animation: fadeInDown 1.5s ease-in-out forwards, textColorChange 10s ease infinite;
     }
 
     h6 {
         font-size: 1.2em;
         font-weight: 400;
         margin-top: 20px;
-        animation: fadeInUp 1.5s ease-in-out forwards;
+        animation: fadeInUp 1.5s ease-in-out forwards, textColorChange 10s ease infinite;
         animation-delay: 0.5s;
     }
 
@@ -72,6 +76,36 @@
 
         100% {
             background-position: 0% 50%;
+        }
+    }
+
+    /* Animasi perubahan warna teks antara putih dan hitam */
+    @keyframes textColorChange {
+
+        0%,
+        100% {
+            color: white;
+        }
+
+        50% {
+            color: black;
+        }
+    }
+
+    /* Mobile responsive adjustments */
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 20px;
+            /* Menambahkan padding pada mobile */
+        }
+
+        h1 {
+            font-size: 2.5em;
+            /* Mengurangi ukuran font pada mobile */
+        }
+
+        h6 {
+            font-size: 1.1em;
         }
     }
 
