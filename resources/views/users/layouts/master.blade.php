@@ -9,6 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@stack('title')</title>
 
     <!-- CSS FILES -->
@@ -27,6 +28,9 @@
     <link href="{{ url('/') }}/fe/css/templatemo-topic-listing.css" rel="stylesheet">
 
     @stack('css')
+
+
+    <link href="{{ asset('alert/css/sweetalert2.css') }} " rel="stylesheet" />
 </head>
 
 <body id="top">
@@ -133,6 +137,81 @@
 
     @stack('js')
 
+    <script src="{{ URL::to('alert/js/sweetalert.js') }}"></script>
+    <script>
+        const userRole = "{{ auth()->check() ? auth()->user()->type : 'guest' }}"; 
+       
+        if (userRole === 'user') {
+            $('#nav_section3').show();
+            $('#section_3').show();
+            $('#nav_section5').show();
+            $('#section_5').show();
+        } else {
+            $('#nav_section3').hide();
+            $('#section_3').hide();
+            $('#nav_section5').hide();
+            $('#section_5').hide();
+        }
+        document.getElementById('loginButton').addEventListener('click', function () {
+            let userIP = '';
+
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    userIP = data.ip;
+                })
+                .catch(error => console.error('Error fetching IP:', error));
+
+            
+            Swal.fire({
+                title: 'Pilih Jenis Login',
+                text: 'Apakah Anda ingin login sebagai admin?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Admin',
+                cancelButtonText: 'Bukan Admin',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Cek IP sebelum mengizinkan login admin
+                    fetch(`/validate-admin-ip?ip=${userIP}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.isAllowed) {
+                                Swal.fire({
+                                    title: 'Login Admin',
+                                    text: 'Anda memilih untuk login sebagai admin.',
+                                    icon: 'success'
+                                });
+                                window.location.href = `{{ url('login') }}`;
+                            } else {
+                                Swal.fire({
+                                    title: 'Akses Ditolak',
+                                    text: 'Anda tidak memiliki izin untuk mengakses login admin.',
+                                    icon: 'error'
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Terjadi kesalahan saat memvalidasi IP.',
+                                icon: 'error'
+                            });
+                            console.error('Error:', error);
+                        });
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire({
+                        title: 'Login Pengguna',
+                        text: 'Anda memilih untuk login sebagai pengguna biasa.',
+                        icon: 'info'
+                    });
+                    window.location.href = `{{ url('/login/user') }}`;
+                }
+            });
+        });
+
+    </script>
 </body>
 
 </html>

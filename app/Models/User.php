@@ -18,6 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'nik',
         'name',
         'email',
         'password',
@@ -43,11 +44,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    
+    public function dataremaja()
+    {
+        return $this->hasOne(Dataremaja::class, 'NIK', 'NIK');
+    }
 
     protected function type(): Attribute
     {
         return new Attribute(
-            get: fn ($value) =>  ["user", "admin"][$value],
+            get: fn ($value) =>  isset(["user", "admin"][$value]) ? ["user", "admin"][$value] : throw new \Exception("Invalid type value"),
         );
     }
+
 }

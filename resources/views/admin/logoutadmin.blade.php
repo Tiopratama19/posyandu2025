@@ -52,7 +52,7 @@
                                                 <h5>Kamu Telah Logout</h5>
                                                 <p class="text-muted font-size-15">Terima Kasih Sudah Menggunakan<span class="fw-semibold text-dark">Dason</span></p>
                                                 <div class="mt-4">
-                                                    <a href="{{ url('/') }}" class="btn btn-primary w-100 waves-effect waves-light">Sign In</a>
+                                                    <a href="{{ url('/login') }}" class="btn btn-primary w-100 waves-effect waves-light">Sign In</a>
                                                 </div>
                                             </div>
                                         </div>

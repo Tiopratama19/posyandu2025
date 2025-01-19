@@ -167,6 +167,17 @@ class JadwalKonselingController extends Controller
         }
     }
 
+    public function getCounselingData()
+    {
+        $counseling = Jadwalkonseling::whereYear('TanggalKegiatan', Carbon::now()->year)
+        ->where('TanggalKegiatan', '>=', Carbon::now()->subMonths(2))
+        ->orderBy('TanggalKegiatan', 'DESC')
+        ->get();
+        
+        return view('users.partials.counseling_list', compact('counseling'));
+    }
+
+
     public function sensor($data = '')
     {
         if ($data == '') {

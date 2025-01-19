@@ -40,9 +40,13 @@ Route::get('/', [LandingController::class, 'index']);
 //End
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::get('/login/user', [AuthController::class, 'indexUser'])->name('loginUser');
+
 Route::post('/postLogin', [AuthController::class, 'postLogin'])->name('admin.login');
+Route::post('/postLogin/user', [AuthController::class, 'postLoginUser'])->name('user.login');
+
 Route::get('/logout', [AuthController::class, 'logout']);
-Route::get('/logout', [LogoutadminController::class, 'index'])->name('admin.logoutPage');
+Route::get('/logout/page', [LogoutadminController::class, 'index'])->name('admin.logoutPage');
 
 Route::get('/getpeserta/{id}', [JadwalKonselingController::class, 'getPeserta']);
 Route::post('/tambahpeserta/{id}', [JadwalKonselingController::class, 'tambahpeserta']);
@@ -50,6 +54,9 @@ Route::post('/tambahpeserta/{id}', [JadwalKonselingController::class, 'tambahpes
 Route::post('/store-peserta', [LandingController::class, 'storePeserta'])->name('informasi.peserta.store');
 
 Route::get('/detail/{id}', [LandingController::class, 'detail']);
+Route::get('/get-counseling-data', [JadwalKonselingController::class, 'getCounselingData']);
+
+Route::get('/validate-admin-ip', [AuthController::class, 'validateAdminIP']);
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
     Route::prefix('admin')->group(function () {

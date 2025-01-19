@@ -16,7 +16,6 @@ class DataRemajaController extends Controller
         app()->setLocale('id');
 
         try {
-            // Parse the date formats
             $date1 = Carbon::createFromFormat('Y-m-d', $tglawal);
             $date2 = Carbon::createFromFormat('Y-m-d', $tglakhir);
         } catch (\Exception $e) {
@@ -25,7 +24,6 @@ class DataRemajaController extends Controller
         }
 
         try {
-            // Query to fetch data between given dates
             $remaja = DB::table('dataremajas')
                 ->join('riwayats', 'dataremajas.id', '=', 'riwayats.id_dataremaja')
                 ->select(

@@ -56,6 +56,11 @@
                                                     id="example-text-input">
                                             </div>
                                             <div class="mb-3">
+                                                <label for="example-text-input" class="form-label">Email</label>
+                                                <input class="form-control" name="email" type="email" value=""
+                                                    id="example-text-input">
+                                            </div>
+                                            <div class="mb-3">
                                                 <label for="example-search-input" class="form-label">Nama</label>
                                                 <input class="form-control" name="Nama" type="text" value=""
                                                     onkeypress='return harusHuruf(event)' id="example-search-input">

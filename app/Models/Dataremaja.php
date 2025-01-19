@@ -10,13 +10,14 @@ class Dataremaja extends Model
 {
     use HasFactory;
     protected $fillable= [
-        'NIK', 'Nama', 'TempatLahir', 'TanggalLahir', 'JenisKelamin'
+        'NIK', 'email', 'Nama', 'TempatLahir', 'TanggalLahir', 'JenisKelamin'
     ];
 
     public static function rules($id = null)
     {
         return [
             'NIK' => 'required|unique:Dataremaja,NIK'. $id,
+            'email' => 'required|unique:Dataremaja,email'. $id,
             'Nama' => 'required|unique:Dataremaja,Nama'. $id,
             'TempatLahir' => 'required|unique:Dataremaja,TempatLahir' . $id,
             'TanggalLahir' => 'required|unique:Dataremaja,TanggalLahir'. $id,
@@ -27,5 +28,10 @@ class Dataremaja extends Model
     public function riwayat(): HasMany
     {
         return $this->hasMany(Riwayat::class, 'id_dataremaja');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'nik', 'nik');
     }
 }

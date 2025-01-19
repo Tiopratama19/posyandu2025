@@ -55,6 +55,11 @@
                                                     value="{{ $data->NIK }}" id="example-text-input">
                                             </div>
                                             <div class="mb-3">
+                                                <label for="example-text-input" class="form-label">Email</label>
+                                                <input class="form-control" name="email" type="email" value=""
+                                                    id="example-text-input"  value="{{ $data->email }}" >
+                                            </div>
+                                            <div class="mb-3">
                                                 <label for="example-search-input" class="form-label">Nama</label>
                                                 <input class="form-control" name="Nama" type="text"
                                                     value="{{ $data->Nama }}" id="example-search-input">

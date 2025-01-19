@@ -100,6 +100,19 @@
     <script src="{{ URL::to('template1/theme/assets/js/app.js') }}"></script>
     <!-- dashboard init -->
     @stack('scripts')
+
+    <script>
+        let userIP = '';
+
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                userIP = data.ip; // Simpan IP pengguna
+                console.log("User IP:", userIP);
+            })
+            .catch(error => console.error('Error fetching IP:', error));
+
+    </script>
 </body>
 
 </html>

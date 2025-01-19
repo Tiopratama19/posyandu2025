@@ -7,13 +7,16 @@ use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeMail;
 
 class ImportController extends Controller
 {
     public function import(Request $request)
     {
         try {
-            // Validasi file
             $request->validate([
                 'file' => 'required|mimes:xlsx,csv,ods|max:2048',
             ]);
@@ -21,16 +24,13 @@ class ImportController extends Controller
             $file = $request->file('file');
             $path = $file->getRealPath();
 
-            // Memuat file Excel menggunakan PhpSpreadsheet
             $spreadsheet = IOFactory::load($path);
             $sheet = $spreadsheet->getActiveSheet();
             $rows = $sheet->toArray(null, true, true, true);
 
-            // Loop untuk menyimpan data
             foreach ($rows as $key => $row) {
                 if ($key == 1) continue; // Skip header baris pertama
 
-                // Check if NIK already exists
                 if (Dataremaja::where('NIK', $row['A'])->exists()) {
                     Log::warning('Duplicate NIK found: ' . $row['A']);
                     continue;
@@ -43,14 +43,25 @@ class ImportController extends Controller
                     'TanggalLahir' => Carbon::parse($row['D']),
                     'JenisKelamin' => $row['E'],
                 ]);
+
+                if (!User::where('nik', $row['A'])->exists()) {
+                    $randomPassword = Str::random(8);
+                    $user = User::create([
+                        'name' => $row['B'],
+                        'nik' => $row['A'],
+                        'email' => $row['F'],
+                        'password' => Hash::make($randomPassword),
+                        'type' => 0,
+                    ]);
+        
+                    Mail::to($row['F'])->send(new WelcomeMail($randomPassword));
+                }
             }
 
              return response()->json([
                 'status' => 'success',
                 'message' => 'Data berhasil diimpor'
             ], 200);
-
-            dd('haii');
         } catch (\Exception $e) {
             Log::error('Import failed: ' . $e->getMessage());
             return response()->json([

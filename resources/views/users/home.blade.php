@@ -1,13 +1,89 @@
-<section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+    }
+
+    .hero-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        text-align: center;
+        background: linear-gradient(270deg, #00c6ff, #0072ff);
+        background-size: 400% 400%;
+        animation: gradientAnimation 10s ease infinite;
+        color: white;
+    }
+
+    h1,
+    h6 {
+        margin: 0;
+        opacity: 0;
+        animation-fill-mode: forwards;
+    }
+
+    h1 {
+        font-size: 3em;
+        font-weight: 600;
+        animation: fadeInDown 1.5s ease-in-out forwards;
+    }
+
+    h6 {
+        font-size: 1.2em;
+        font-weight: 400;
+        margin-top: 20px;
+        animation: fadeInUp 1.5s ease-in-out forwards;
+        animation-delay: 0.5s;
+    }
+
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes gradientAnimation {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+</style>
+
+<section class="hero-section" id="section_1">
     <div class="container">
         <div class="row">
-
             <div class="col-lg-8 col-12 mx-auto">
-                <h1 class="text-white text-center">Selamat Datang Di Website Posyandu Remaja</h1>
-
-                <h6 class="text-center">Sebuah platform edukasi untuk masyarakat Kampung Cupu</h6>
+                <h1>Selamat Datang Di Website Posyandu Remaja</h1>
+                <h6>Sebuah platform edukasi untuk masyarakat Kampung Cupu</h6>
             </div>
-
         </div>
     </div>
 </section>
@@ -32,18 +108,18 @@
             {{-- </div>
 
                         <img src="{{url('/')}}/fe/images/topics/undraw_Remote_design_team_re_urdx.png"
-                            class="custom-block-image img-fluid" alt="">
-                    </a>
-                </div>
-            </div> --}}
+            class="custom-block-image img-fluid" alt="">
+            </a>
+        </div>
+    </div> --}}
 
-            {{-- <div class="col-lg-6 col-12"> --}}
-            {{-- <div class="custom-block custom-block-overlay">
+    {{-- <div class="col-lg-6 col-12"> --}}
+    {{-- <div class="custom-block custom-block-overlay">
                     <div class="d-flex flex-column h-100">
                         <img src="{{url('/')}}/fe/images/businesswoman-using-tablet-analysis.jpg"
-                            class="custom-block-image img-fluid" alt=""> --}}
+    class="custom-block-image img-fluid" alt=""> --}}
 
-            {{-- <div class="custom-block-overlay-text d-flex">
+    {{-- <div class="custom-block-overlay-text d-flex">
                             <div>
                                 <h5 class="text-white mb-2">Finance</h5>
 
@@ -55,9 +131,9 @@
                             </div>
 
                             {{-- <span class="badge bg-finance rounded-pill ms-auto">25</span> --}}
-            {{-- </div> --}}
+    {{-- </div> --}}
 
-            {{-- <div class="social-share d-flex">
+    {{-- <div class="social-share d-flex">
                             <p class="text-white me-4">Share:</p>
 
                             <ul class="social-icon">
@@ -70,8 +146,8 @@
                                 </li></a>
                         </div> --}}
 
-            <div class="section-overlay"></div>
-        </div>
+    <div class="section-overlay"></div>
+    </div>
     </div>
     </div>
 

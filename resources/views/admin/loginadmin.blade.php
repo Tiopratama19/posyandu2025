@@ -1,10 +1,6 @@
 <!doctype html>
 <html lang="en">
-
-
-<!-- Mirrored from themesdesign.in/dason-php/layouts/default/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 18 Nov 2023 03:57:40 GMT -->
 <head>
-
         <meta charset="utf-8" />
         <title>Login | Admin</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -77,7 +73,7 @@
                                                         </label>
                                                     </div>
                                                 </div>
-
+                                                <input type="hidden" name="userip" id="userip">
                                             </div>
                                             <div class="mb-3">
                                                 <button class="btn btn-primary w-100 waves-effect waves-light" type="submit">Log In</button>
@@ -124,61 +120,7 @@
                                                     <img src="{{ asset('template1/theme/assets/images/users/avatar-3.jpg' ) }}" class="avatar-md img-fluid rounded-circle d-block" alt="...">
                                                 </button>
                                             </div>
-                                            <!-- end carouselIndicators -->
-                                            <div class="carousel-inner">
-                                                <div class="carousel-item active">
-                                                    <div class="testi-contain text-center text-white">
-                                                        <i class="bx bxs-quote-alt-left text-success display-6"></i>
-                                                        <h4 class="mt-4 fw-medium lh-base text-white">“I feel confident
-                                                            imposing change
-                                                            on myself. It's a lot more progressing fun than looking back.
-                                                            That's why
-                                                            I ultricies enim
-                                                            at malesuada nibh diam on tortor neaded to throw curve balls.”
-                                                        </h4>
-                                                        <div class="mt-4 pt-1 pb-5 mb-5">
-                                                            <h5 class="font-size-16 text-white">Richard Drews
-                                                            </h5>
-                                                            <p class="mb-0 text-white-50">Web Designer</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="carousel-item">
-                                                    <div class="testi-contain text-center text-white">
-                                                        <i class="bx bxs-quote-alt-left text-success display-6"></i>
-                                                        <h4 class="mt-4 fw-medium lh-base text-white">“Our task must be to
-                                                            free ourselves by widening our circle of compassion to embrace
-                                                            all living
-                                                            creatures and
-                                                            the whole of quis consectetur nunc sit amet semper justo. nature
-                                                            and its beauty.”</h4>
-                                                        <div class="mt-4 pt-1 pb-5 mb-5">
-                                                            <h5 class="font-size-16 text-white">Rosanna French
-                                                            </h5>
-                                                            <p class="mb-0 text-white-50">Web Developer</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="carousel-item">
-                                                    <div class="testi-contain text-center text-white">
-                                                        <i class="bx bxs-quote-alt-left text-success display-6"></i>
-                                                        <h4 class="mt-4 fw-medium lh-base text-white">“I've learned that
-                                                            people will forget what you said, people will forget what you
-                                                            did,
-                                                            but people will never forget
-                                                            how donec in efficitur lectus, nec lobortis metus you made them
-                                                            feel.”</h4>
-                                                        <div class="mt-4 pt-1 pb-5 mb-5">
-                                                            <h5 class="font-size-16 text-white">Ilse R. Eaton</h5>
-                                                            <p class="mb-0 text-white-50">Manager
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- end carousel-inner -->
+                                         
                                         </div>
                                         <!-- end review carousel -->
                                     </div>
@@ -208,8 +150,18 @@
 
         <script src="{{ asset('template1/theme/assets/js/pages/feather-icon.init.js' ) }}"></script>
 
+        <script>
+            let userIP = '';
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    userIP = data.ip;
+                    $('#userip').val(userIP);
+                })
+                .catch(error => console.error('Error fetching IP:', error));
+
+        </script>
     </body>
 
 
-<!-- Mirrored from themesdesign.in/dason-php/layouts/default/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 18 Nov 2023 03:57:40 GMT -->
 </html>
