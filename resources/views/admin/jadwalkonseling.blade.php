@@ -12,6 +12,13 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <style>
+        table th, table td {
+            white-space: nowrap;
+        }
+
+    </style>
 @endpush
 
 @section('content')
@@ -51,47 +58,47 @@
                             @endif
 
                             <div class="card-body">
-                                <table id="datatable"
-                                    class="table table-striped nowrap dt-responsive nowrap w-100 display nowrap"
-                                    style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th width="50px">No</th>
-                                            <th width="150px">Tanggal Kegiatan</th>
-                                            <th>Nama Kegiatan</th>
-                                            <th>Nama Petugas Kesehatan</th>
-                                            <th width="150px">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        @php
-                                            $no = 1;
-                                        @endphp
-                                        @foreach ($data as $index => $row)
+                                <div class="table-responsive">
+                                    <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap w-auto" style="width:100%">
+                                        <thead>
                                             <tr>
-                                                <th scope="row">{{ $no++ }}</th>
-                                                <td>{{ $row->TanggalKegiatan }}</td>
-                                                <td>{{ $row->NamaKegiatan }}</td>
-                                                <td>{{ $row->NamaBidan }}</td>
-                                                <td>
-                                                    <a href="/admin/tampiljadwal/{{ $row->id }}"
-                                                        class="btn btn-info">Edit</a>
-                                                    <form action="{{ route('jadwalkonselingprint', $row->id) }}" 
-                                                        method="POST" 
-                                                        style="display: inline;">
-                                                        @csrf
-                                                        <button type="submit" class="btn btn-primary">Download PDF</button>
-                                                    </form>
-                                                    <a href="#" class="btn btn-danger delete"
-                                                        data-id="{{ $row->id }}"
-                                                        data-nama="{{ $row->Nama }}">Hapus</a>
-                                                    <!-- /deletedata/{{ $row->id }} -->
-                                                </td>
+                                                <th width="50px">No</th>
+                                                <th width="150px">Tanggal Kegiatan</th>
+                                                <th>Nama Kegiatan</th>
+                                                <th>Nama Petugas Kesehatan</th>
+                                                <th width="150px">Aksi</th>
+                                                <th width="150px"></th>
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $no = 1;
+                                            @endphp
+                                            @foreach ($data as $index => $row)
+                                                <tr>
+                                                    <th scope="row">{{ $no++ }}</th>
+                                                    <td>{{ $row->TanggalKegiatan }}</td>
+                                                    <td>{{ $row->NamaKegiatan }}</td>
+                                                    <td>{{ $row->NamaBidan }}</td>
+                                                    <td>
+                                                        <a href="/admin/tampiljadwal/{{ $row->id }}" class="btn btn-info btn-sm">Edit</a>
+                                                        <form action="{{ route('jadwalkonselingprint', $row->id) }}" method="POST" style="display: inline;">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-primary btn-sm">Download PDF</button>
+                                                        </form>
+                                                        <a href="#" class="btn btn-danger btn-sm delete"
+                                                            data-id="{{ $row->id }}"
+                                                            data-nama="{{ $row->Nama }}">Hapus</a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="/admin/dokumentasi/{{ $row->id }}" class="btn btn-success btn-sm">Dokumentasi</a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>

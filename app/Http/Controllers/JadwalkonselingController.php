@@ -10,7 +10,7 @@ use App\Models\Jadwalkonseling;
 use App\Models\PesertaKonseling;
 use App\Http\Controllers\Controller;
 use Barryvdh\DomPDF\Facade\Pdf;
-
+use Illuminate\Support\Facades\DB;
 class JadwalKonselingController extends Controller
 {
     public function index()
@@ -102,10 +102,27 @@ class JadwalKonselingController extends Controller
 
     public function generatePdf($id)
     {
-        $jadwal = Jadwalkonseling::with('pesertaKonselings')->findOrFail($id);
+        $jadwal = DB::table('jadwalkonselings as a')
+        ->join('pesertakonselings as b', DB::raw('BINARY b.id_konselings'), '=', 'a.id')
+        ->join('dataremajas as c', 'c.nik', '=', 'b.nik')
+        ->select('a.id as id_konselings','a.*', 'b.*', 'c.TanggalLahir', 'c.TempatLahir', 'c.JenisKelamin')
+        ->where('a.id', $id)
+        ->first();
+
+        $jumlahPeserta = DB::table('pesertakonselings')
+        ->where('id_konselings', $jadwal->id_konselings)  
+        ->count();
+
+        $pesertaKonselings = DB::table('pesertakonselings as b')
+        ->join('dataremajas as c', 'c.nik', '=', 'b.nik')
+        ->where('b.id_konselings', $jadwal->id_konselings)
+        ->select('b.*', 'c.TanggalLahir', 'c.TempatLahir', 'c.JenisKelamin', 'b.email')
+        ->get();
 
         $data = [
             'jadwal' => $jadwal,
+            'pesertaKonselings' => $pesertaKonselings,
+            'jumlah_peserta' => $jumlahPeserta,
             'tanggal' => Carbon::parse($jadwal->TanggalKegiatan)->isoFormat('D MMMM Y'),
             'created_at' => now()->isoFormat('D MMMM Y')
         ];

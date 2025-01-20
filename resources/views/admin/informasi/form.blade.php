@@ -60,7 +60,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label for="example-search-input" class="form-label">Jenis Informasi</label>
-                                                <select name="jenis" id="jenis" class="form-select" onchange="filterOptions()">
+                                                <select name="jenis" id="jenis" class="form-select" onchange="filterOptions()" disabled>
                                                     <option value="">Silakan Pilih</option>
                                                     @foreach (['kegiatan', 'edukasi'] as $option)
                                                         <option value="{{ $option }}" @selected($option == ($item->jenis ?? ''))>
@@ -173,5 +173,14 @@
                 // Reset the selection if the selected option is hidden
                 kategoriSelect.value = "";
             }
+
+            
+                                            
+            window.onload = function() {
+            const jenisSelect = document.getElementById('jenis');
+            if (!jenisSelect.value) {
+                jenisSelect.value = 'edukasi';  // Menetapkan 'edukasi' sebagai default jika belum dipilih
+            }
+        }
     </script>
 @endpush

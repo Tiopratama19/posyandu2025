@@ -21,11 +21,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">Kegiatan & Edukasi</h4>
+                    <h4 class="mb-sm-0 font-size-18">Edukasi</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Table</a></li>
-                            <li class="breadcrumb-item active">Jumlah Kegiatan & Edukasi</li>
+                            <li class="breadcrumb-item active">Jumlah & Edukasi</li>
                         </ol>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                         <div class="card-header">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <h4 class="card-title">Tabel Kegiatan dan Edukasi</h4>
+                                    <h4 class="card-title">Tabel dan Edukasi</h4>
                                     <p class="card-title-desc">Daftar proker dan informasi.
                                     </p>
                                 </div>
@@ -57,11 +57,11 @@
                         @endif
                         <div class="card-body">
                             <ul class="nav nav-tabs" role="tablist">
-                                <li class="nav-item" role="presentation">
+                                {{-- <li class="nav-item" role="presentation">
                                     <a class="nav-link active" id="simple-tab-0" data-bs-toggle="tab"
                                         href="#simple-tabpanel-0" role="tab" aria-controls="simple-tabpanel-0"
                                         aria-selected="true">Kegiatan</a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="simple-tab-1" data-bs-toggle="tab" href="#simple-tabpanel-1"
                                         role="tab" aria-controls="simple-tabpanel-1" aria-selected="false">Edukasi</a>

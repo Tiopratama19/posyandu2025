@@ -14,4 +14,10 @@ class Jadwalkonseling extends Model
     {
         return $this->hasMany(PesertaKonseling::class, 'id_konselings', 'id');
     }
+
+    public function dokumentasi()
+    {
+        return $this->hasMany(Dokumentasi::class, 'jadwal_id');
+    }
+
 }

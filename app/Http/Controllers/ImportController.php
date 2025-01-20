@@ -31,6 +31,16 @@ class ImportController extends Controller
             foreach ($rows as $key => $row) {
                 if ($key == 1) continue; // Skip header baris pertama
 
+                $validator = Validator::make($row, [
+                    'A' => ['required', new NikValidation()],
+                    'F' => 'required|email',
+                ]);
+        
+                if ($validator->fails()) {
+                    Log::warning('Validation failed for row ' . $key . ': ' . json_encode($validator->errors()));
+                    continue;
+                }
+
                 if (Dataremaja::where('NIK', $row['A'])->exists()) {
                     Log::warning('Duplicate NIK found: ' . $row['A']);
                     continue;

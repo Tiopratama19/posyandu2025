@@ -10,7 +10,7 @@
                     </span>
                     <span class="logo-lg">
                         <img src="{{ asset('template1/theme/assets/images/logoposyandu1.png') }}" alt=""
-                            height="24"> <span class="logo-txt">Posyandu</span>
+                            height="24"> &nbsp;<span class="logo-txt">Posyandu</span>
                     </span>
                 </a>
 
@@ -21,7 +21,7 @@
                     </span>
                     <span class="logo-lg">
                         <img src="{{ asset('template1/theme/assets/images/logoposyandu1.png') }}" alt=""
-                            height="24"> <span class="logo-txt">Posyandu</span>
+                            height="24"> &nbsp;<span class="logo-txt">Posyandu</span>
                     </span>
                 </a>
             </div>

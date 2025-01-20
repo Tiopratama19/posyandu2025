@@ -150,8 +150,8 @@
                     Halo, {{ auth()->user()->name }}
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="{{ url('logout') }}">Logout <i
-                                class="bi bi-box-arrow-in-right"></i></a></li>
+                    <li><a class="dropdown-item" href="{{ url('change-password') }}">Ganti Password <i class="bi bi-key"></i></a></li>
+                    <li><a class="dropdown-item" href="{{ url('logout') }}">Logout <i class="bi bi-box-arrow-in-right"></i></a></li>
                 </ul>
             </div>
             @else

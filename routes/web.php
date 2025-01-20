@@ -1,26 +1,28 @@
 <?php
-
-use App\Http\Controllers\AnggotaController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\LogoutadminController;
-use App\Http\Controllers\DataremajaController;
-use App\Http\Controllers\JadwalkonselingController;
-use App\Http\Controllers\KegiatankaderController;
-use App\Http\Controllers\LoginadminController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProkerposyanduController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\Master\CounselingController;
-use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\Laporan\DataRemajaController as RemajaController;
-use App\Http\Controllers\ImportController;
+use App\Http\Controllers\{
+    AnggotaController,
+    DashboardController,
+    LogoutadminController,
+    DataremajaController,
+    JadwalkonselingController,
+    KegiatankaderController,
+    LoginadminController,
+    ProfileController,
+    ProkerposyanduController,
+    InformasiController,
+    RiwayatController,
+    ImportController,
+    DokumentasiController
+};
 // Add 16/12/2023
 use App\Http\Controllers\Users\{
     LandingController
 };
-use App\Models\Jadwalkonseling;
+
 
 // End
 
@@ -57,6 +59,12 @@ Route::get('/detail/{id}', [LandingController::class, 'detail']);
 Route::get('/get-counseling-data', [JadwalKonselingController::class, 'getCounselingData']);
 
 Route::get('/validate-admin-ip', [AuthController::class, 'validateAdminIP']);
+
+Route::middleware(['auth', 'user-access:user'])->group(function () {
+    Route::get('/change-password', [AuthController::class, 'indexPassword']);
+    Route::post('/change-password', [AuthController::class, 'changePassword'])->name('changePassword');
+});
+
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
     Route::prefix('admin')->group(function () {
@@ -83,6 +91,14 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
             Route::get('/riwayat/{dataremaja}', 'riwayatdetail')->name('riwayatdetail');
             Route::get('/riwayat/{dataremaja}/create', 'riwayatCreate')->name('dataremaja.riwayat-create');
             Route::post('/riwayat/{dataremaja}', 'riwayatStore')->name('dataremaja.riwayat-store');
+        });
+
+        Route::controller(DokumentasiController::class)->group(function () {
+            Route::get('/dokumentasi/{id}', [DokumentasiController::class, 'index'])->name('dokumentasi.index');
+            Route::post('/dokumentasi/{id}', [DokumentasiController::class, 'store'])->name('dokumentasi.store');
+            Route::delete('/dokumentasi/{id}', [DokumentasiController::class, 'destroy'])->name('dokumentasi.destroy');
+            Route::delete('/dokumentasi/all/{id}', [DokumentasiController::class, 'destroyAll'])->name('dokumentasi.destroyAll');
+            Route::post('/dokumentasi/delete-selected', [DokumentasiController::class, 'deleteSelected'])->name('dokumentasi.deleteSelected');
         });
 
 

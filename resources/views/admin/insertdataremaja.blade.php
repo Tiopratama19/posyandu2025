@@ -1,20 +1,21 @@
 @extends('Template.templateadmin')
+
+@push('title')
+POSYANDU | Input Data Remaja
+@endpush
+
+@push('css')
+<!-- DataTables -->
+<link href="{{ asset('template1/themelibs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet"
+    type="text/css" />
+<link href="{{ asset('template1/themelibs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet"
+    type="text/css" />
+<!-- Responsive datatable examples -->
+<link href="{{ asset('template1/themelibs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"
+    rel="stylesheet" type="text/css" />
+@endpush
+
 @section('content')
-    @push('title')
-        POSYANDU | Input Data Remaja
-    @endpush
-
-    @push('css')
-        <!-- DataTables -->
-        <link href="{{ asset('template1/themelibs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet"
-            type="text/css" />
-        <link href="{{ asset('template1/themelibs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet"
-            type="text/css" />
-        <!-- Responsive datatable examples -->
-        <link href="{{ asset('template1/themelibs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"
-            rel="stylesheet" type="text/css" />
-    @endpush
-
     <div class="page-content">
         <div class="container-fluid">
             <!-- start page title -->

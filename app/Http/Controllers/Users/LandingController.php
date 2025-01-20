@@ -12,11 +12,22 @@ use App\Models\Kategori;
 use App\Models\PesertaKegiatan;
 use App\Models\Prokerposyandu;
 use Carbon\Carbon;
-
+use App\Models\Dokumentasi;
 class LandingController extends Controller
 {
     function index()
     {
+        $now = Carbon::now();
+
+        $jadwals = JadwalKonseling::whereYear('TanggalKegiatan', $now->year)
+            ->whereMonth('TanggalKegiatan', $now->month)
+            ->orderBy('TanggalKegiatan', 'desc')
+            ->with('dokumentasi')
+            ->get();
+
+        $dokumentasi = Dokumentasi::whereIn('jadwal_id', $jadwals->pluck('id'))
+            ->orderBy('created_at', 'desc') 
+            ->get();
 
         $data = [
             'counseling' => Jadwalkonseling::whereYear('TanggalKegiatan', Carbon::now()->year)
@@ -27,6 +38,8 @@ class LandingController extends Controller
             'edukasi' => Informasi::where('jenis', 'edukasi')->orderBy('created_at', 'ASC')->get(),
             'anggota' => Anggota::get()->groupBy('jabatan'),
             'kategori' => Kategori::get(),
+            'dokumentasi' => $dokumentasi,
+            'jadwals' => $jadwals 
         ];
 
         return view('users.index', $data);

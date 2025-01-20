@@ -81,6 +81,30 @@ class AuthController extends Controller
         return response()->json(['isAllowed' => $isAllowed]);
     }
 
+    function indexPassword() 
+    {
+        return view('users.auth.gantipassword');
+    }
+
+    function changePassword(Request $request)
+    {
+        $request->validate([
+            'oldPassword' => 'required',
+            'newPassword' => 'required|min:6|confirmed',
+        ]);
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->oldPassword, $user->password)) {
+            return response()->json(['success' => false, 'message' => 'Password lama tidak cocok.'], 400);
+        }
+
+        $user->password = Hash::make($request->newPassword);
+        $user->save();
+
+        return response()->json(['success' => true, 'message' => 'Password berhasil diubah.']);
+    }
+    
     public function logout()
     {
         if (Auth::check() && Auth::user()->type === 'user') {
@@ -88,7 +112,7 @@ class AuthController extends Controller
             return redirect('/');
         } else {
             Auth::logout();
-            return redirect('admin.logoutPage');
+            return redirect('/logout/page');
         }
         
     }

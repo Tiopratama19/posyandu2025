@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>@stack('title')</title>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -107,8 +107,7 @@
         fetch('https://api.ipify.org?format=json')
             .then(response => response.json())
             .then(data => {
-                userIP = data.ip; // Simpan IP pengguna
-                console.log("User IP:", userIP);
+                userIP = data.ip;
             })
             .catch(error => console.error('Error fetching IP:', error));
 
