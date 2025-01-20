@@ -28,7 +28,7 @@
 
 
 @endpush
-<section class="explore-section section-padding" id="section_2">
+<section class="explore-section section-padding" id="section_5">
     <div class="container">
         <div class="col-12 text-center">
             <h2 class="mb-4">Dokumentasi Kegiatan</h2>

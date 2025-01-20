@@ -104,11 +104,11 @@
     <div class="email-wrapper">
         <div class="email-header">
             <h1>Selamat Bergabung!</h1>
-            <p>Kami senang menyambut Anda di komunitas kami.</p>
+            <p>Kami senang menyambut Anda di Posyandu Remaja.</p>
         </div>
         <div class="email-body">
             <p>Halo,</p>
-            <p>Terima kasih telah bergabung dengan platform kami! Kami sangat senang Anda ada di sini. Berikut adalah password sementara Anda:</p>
+            <p>Terima kasih telah bergabung dengan Posyandu Remaja Kami sangat senang Anda ada di sini. Berikut adalah password sementara Anda:</p>
             <p style="text-align: center; font-size: 20px; font-weight: bold;">
                 Password: <strong>{{ $password }}</strong>
             </p>
