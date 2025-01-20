@@ -187,10 +187,18 @@ class JadwalKonselingController extends Controller
     public function getCounselingData()
     {
         $counseling = Jadwalkonseling::whereYear('TanggalKegiatan', Carbon::now()->year)
-        ->where('TanggalKegiatan', '>=', Carbon::now()->subMonths(2))
-        ->orderBy('TanggalKegiatan', 'DESC')
+        ->orderByRaw("
+            CASE
+                WHEN TanggalKegiatan >= ? THEN 1 -- Tanggal mendatang atau hari ini
+                ELSE 2 -- Tanggal yang sudah terlewat
+            END ASC,
+            CASE
+                WHEN TanggalKegiatan >= ? THEN TanggalKegiatan -- Urutkan tanggal mendatang dari yang terdekat
+                ELSE TanggalKegiatan
+            END DESC", [
+            Carbon::today(), Carbon::today()
+        ])
         ->get();
-        
         return view('users.partials.counseling_list', compact('counseling'));
     }
 

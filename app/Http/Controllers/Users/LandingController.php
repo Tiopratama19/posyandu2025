@@ -31,9 +31,18 @@ class LandingController extends Controller
 
         $data = [
             'counseling' => Jadwalkonseling::whereYear('TanggalKegiatan', Carbon::now()->year)
-                ->where('TanggalKegiatan', '>=', Carbon::now()->subMonths(2))
-                ->orderBy('TanggalKegiatan', 'DESC')
-                ->get(),
+            ->orderByRaw("
+                CASE
+                    WHEN TanggalKegiatan >= ? THEN 1 -- Tanggal mendatang atau hari ini
+                    ELSE 2 -- Tanggal yang sudah terlewat
+                END ASC,
+                CASE
+                    WHEN TanggalKegiatan >= ? THEN TanggalKegiatan -- Urutkan tanggal mendatang dari yang terdekat
+                    ELSE TanggalKegiatan
+                END DESC", [
+                Carbon::today(), Carbon::today()
+            ])
+            ->get(),
             'prokerposyandu' => Informasi::where('jenis', 'kegiatan')->orderBy('created_at', 'ASC')->get(),
             'edukasi' => Informasi::where('jenis', 'edukasi')->orderBy('created_at', 'ASC')->get(),
             'anggota' => Anggota::get()->groupBy('jabatan'),
