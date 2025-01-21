@@ -85,13 +85,12 @@ class DataremajaController extends Controller
     public function deletedata($id)
     {
         $data = Dataremaja::find($id);
+        $nik = $data->nik;
         $data->delete();
-
-        $user = User::where('nik', $data->nik)->first();
-        if(!empty($user)) {
+        $user = User::where('nik', $nik)->first();
+        if ($user && $user->id !== auth()->id()) {
             $user->delete();
         }
-        
         return redirect()->route('dataremaja')->with('success' , 'Data Remaja telah dihapus');
     }
 
