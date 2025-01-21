@@ -196,6 +196,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
     const checkboxes = document.querySelectorAll("input[type='checkbox'][data-id]");
 
+    const urlSegments = window.location.pathname.split('/');
+    const id = parseInt(urlSegments[urlSegments.length - 1], 10); // Ambil segmen terakhir dan ubah ke integer
+
+    if (isNaN(id)) {
+        console.error('ID tidak valid di URL');
+        return;
+    }
+
     let filesArray = []; // Menyimpan semua file yang dipilih
     let captions = []; // Menyimpan caption untuk setiap file
 
@@ -264,6 +272,16 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('captions[]', captions[index].getData()); // Kirim caption
         });
 
+        // Tampilkan SweetAlert saat proses unggah dimulai
+        const uploadingAlert = Swal.fire({
+            title: 'Mengunggah...',
+            text: 'Mohon tunggu, file sedang diunggah.',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading(); // Tampilkan animasi loading
+            },
+        });
+
         fetch("{{ route('dokumentasi.store', ['id' => $id]) }}", {
             method: 'POST',
             body: formData,
@@ -271,33 +289,52 @@ document.addEventListener('DOMContentLoaded', () => {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
             },
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message) {
-                renderDokumentasi(data.data); // Render data terbaru
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    // Tutup SweetAlert loading
+                    Swal.close();
+
+                    // Tampilkan SweetAlert sukses
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Unggah berhasil!',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+
+                    // Render data terbaru
+                    renderDokumentasi(data.data, parseInt(id));
+
+                    // Bersihkan area preview dan array
+                    previewContainer.innerHTML = '';
+                    filesArray = [];
+                    captions = [];
+                }
+            })
+            .catch(error => {
+                // Tutup SweetAlert loading
+                Swal.close();
+
+                // Tampilkan SweetAlert error
                 Swal.fire({
-                    icon: 'success',
-                    title: 'Unggah berhasil!',
-                    showConfirmButton: false,
-                    timer: 1500,
+                    icon: 'error',
+                    title: 'Unggah gagal!',
+                    text: error.message,
                 });
-                previewContainer.innerHTML = ''; // Bersihkan area preview
-                filesArray = []; // Kosongkan array file
-                captions = []; // Kosongkan array caption
-            }
-        })
-        .catch(error => {
-            Swal.fire({
-                icon: 'error',
-                title: 'Unggah gagal!',
-                text: error.message,
             });
-        });
     });
 
-    function renderDokumentasi(data) {
+
+    function renderDokumentasi(data, id) {
+        // Kosongkan elemen dokumentasiList
         dokumentasiList.innerHTML = '';
-        data.forEach(item => {
+
+        // Filter data berdasarkan jadwal_id yang sama dengan id parameter
+        const filteredData = data.filter(item => item.jadwal_id === id);
+
+        // Iterasi data yang sudah difilter
+        filteredData.forEach(item => {
             const col = document.createElement('div');
             col.className = 'col-md-3 mb-4';
             col.innerHTML = `
@@ -310,8 +347,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>`;
             dokumentasiList.appendChild(col);
         });
+
+        // Pasang event untuk tombol hapus
         attachDeleteEvents();
     }
+
 
     // Event hapus gambar
     function attachDeleteEvents() {
@@ -336,7 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         .then(response => response.json())
                         .then(data => {
                             if (data.message) {
-                                renderDokumentasi(data.data);
+                                renderDokumentasi(data.data, parseInt(id));
                                 Swal.fire('Dokumentasi!', 'Gambar berhasil dihapus.', 'success');
                             }
                         });
@@ -366,7 +406,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         .then(response => response.json())
                         .then(data => {
                             if (data.message) {
-                                renderDokumentasi(data.data);
+                                renderDokumentasi(data.data, parseInt(id));
                                 Swal.fire('Dihapus!', 'Dokumentasi berhasil dihapus.', 'success');
                             }
                         });
