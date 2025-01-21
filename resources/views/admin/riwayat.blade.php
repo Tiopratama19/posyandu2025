@@ -1,6 +1,6 @@
 @extends('Template.templateadmin')
 @push('title')
-    POSYANDU | Data Riwayat Remaja
+    POSYANDU | Data Detail Remaja
 @endpush
 
 @push('css')
@@ -22,11 +22,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0 font-size-18">Data Riwayat</h4>
+                        <h4 class="mb-sm-0 font-size-18">Data Detail</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="javascript: void(0);">Table</a></li>
-                                <li class="breadcrumb-item active">Jumlah Riwayat</li>
+                                <li class="breadcrumb-item active">Jumlah Detail</li>
                             </ol>
                         </div>
                     </div>
@@ -38,10 +38,10 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Tabel Data Riwayat {{ $dataremaja->Nama }}</h4>
+                                <h4 class="card-title">Tabel Data Detail {{ $dataremaja->Nama }}</h4>
                                 <p class="card-title-desc">Pastikan data yang dimasukkan itu sudah tepat dan benar.</p>
                                 <div class="d-flex justify-content-end gap-2">
-                                    <a href="{{ route('dataremaja.riwayat-create', $dataremaja->id) }}"
+                                    <a href="{{ route('dataremaja.Detail-create', $dataremaja->id) }}"
                                         class="btn btn-primary">Tambah Data</a>
                                     <a href="/admin/dataremaja" class="btn btn-danger">Kembali</a>
                                 </div>
@@ -63,7 +63,7 @@
                                             <th>Tensi</th>
                                             <th>LILA</th>
                                             <th>LP</th>
-                                            <th>Riwayat Penyakit</th>
+                                            <th>Detail Penyakit</th>
                                             <th width="230px">Aksi</th>
                                         </tr>
                                     </thead>
@@ -78,9 +78,9 @@
                                             <td>{{ $row->LP }} cm</td>
                                             <td>{{ $row->Anemia }}</td>
                                             <td>
-                                                <a href="/admin/tampilriwayat/{{ $row->id }}"
+                                                <a href="/admin/tampilDetail/{{ $row->id }}"
                                                     class="btn btn-info">Edit</a>
-                                                <a href="/admin/deleteriwayat/{{ $row->id }}"
+                                                <a href="/admin/deleteDetail/{{ $row->id }}"
                                                     class="btn btn-danger delete" data-id="{{ $row->id }}"
                                                     data-nama="{{ $row->Nama }}">Hapus</a>
                                             </td>
@@ -116,7 +116,7 @@
     <script>
         $('.delete').click(function() {
 
-            var riwayatid = $(this).attr('data-id');
+            var Detailid = $(this).attr('data-id');
             var nama = $(this).attr('data-nama');
 
             const swalWithBootstrapButtons = Swal.mixin({

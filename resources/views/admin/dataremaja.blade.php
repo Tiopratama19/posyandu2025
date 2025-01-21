@@ -139,7 +139,7 @@
                                         @foreach ($data as $index => $row)
                                             <tr>
                                                 <th scope="row">{{ $no++ }}</th>
-                                                <td>{{ $row->NIK }}</td>
+                                                <td>{{ $row->nik }}</td>
                                                 <td>{{ $row->Nama }}</td>
                                                 <td>{{ $row->TempatLahir }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($row->TanggalLahir)->isoFormat('D MMMM YYYY') }}
@@ -150,7 +150,7 @@
                                                     <a href="/admin/tampildata/{{ $row->id }}"
                                                         class="btn btn-info">Edit</a>
                                                     <a href="/admin/riwayat/{{ $row->id }}"
-                                                        class="btn btn-primary">Riwayat</a>
+                                                        class="btn btn-primary">Detail</a>
                                                     <a href="#" class="btn btn-danger delete"
                                                         data-id="{{ $row->id }}"
                                                         data-nama="{{ $row->Nama }}">Hapus</a>
