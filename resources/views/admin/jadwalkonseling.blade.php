@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0 font-size-18">Jadwal Konseling</h4>
+                        <h4 class="mb-sm-0 font-size-18">Jadwal Kegiatan</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="javascript: void(0);">Table</a></li>
@@ -45,7 +45,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Tabel Jadwal Konseling</h4>
+                                <h4 class="card-title">Tabel Jadwal Kegiatan</h4>
                                 <p class="card-title-desc">Pastikan waktu yang dimasukkan itu sudah tepat dan benar.</p>
                                 <span style="float:right">
                                     <a href="/admin/tambahjadwal" class="btn btn-primary">Tambah Data</a>

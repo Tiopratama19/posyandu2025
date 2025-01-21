@@ -1,6 +1,6 @@
 @extends('Template.templateadmin')
 @push('title')
-    POSYANDU | Input Jadwal Konseling
+    POSYANDU | Input Jadwal Kegiatan
 @endpush
 
 @push('css')
