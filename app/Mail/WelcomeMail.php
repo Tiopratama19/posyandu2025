@@ -28,7 +28,8 @@ class WelcomeMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Selamat Bergabung di Platform Kami')
-                    ->view('emails.welcome'); // Menggunakan view email yang akan kita buat
+        return $this->from(config('mail.from.address'), config('app.name'))
+                    ->subject('Selamat Bergabung di ' . config('app.name') . '!')
+                    ->view('emails.welcome');
     }
 }
