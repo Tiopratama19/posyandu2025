@@ -51,8 +51,8 @@
                                         <div class="col-lg-12">
                                             <div class="mb-3">
                                                 <label for="example-text-input" class="form-label">NIK</label>
-                                                <input class="form-control" name="NIK" type="text" pattern="\d{16}"
-                                                    value="{{ $data->NIK }}" id="example-text-input">
+                                                <input class="form-control" name="nik" type="text" pattern="\d{16}"
+                                                    value="{{ $data->nik }}" id="example-text-input">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="example-text-input" class="form-label">Email</label>

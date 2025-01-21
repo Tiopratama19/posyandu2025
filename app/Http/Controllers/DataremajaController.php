@@ -34,11 +34,17 @@ class DataremajaController extends Controller
 
     public function insert(Request $request)
     {
+
         $request->validate([
             'nik' => ['required', new NikValidation()],
-            'email' => 'required|email'
+            'email' => 'required|email|unique:users,email',
+        ], [
+            'nik.required' => 'NIK is required.',
+            'email.required' => 'Email is required.',
+            'email.email' => 'The email must be a valid email address.',
+            'email.unique' => 'The email is already taken.',
         ]);
-
+        
         $cek = Dataremaja::where('nik', $request->nik)->count();
         if($cek > 0)
         {

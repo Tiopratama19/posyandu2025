@@ -52,7 +52,7 @@ POSYANDU | Input Data Remaja
                                         <div class="col-lg-12">
                                             <div class="mb-3">
                                                 <label for="example-text-input" class="form-label">NIK</label>
-                                                <input class="form-control" name="NIK" type="text" value=""
+                                                <input class="form-control" name="nik" type="text" value=""
                                                     pattern="\d{16}" maxlength="16" onkeypress="return hanyaAngka(event)"
                                                     id="example-text-input">
                                             </div>
