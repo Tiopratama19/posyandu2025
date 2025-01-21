@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Jadwal Konseling</title>
+    <title>Laporan Jadwal Kegiatan</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -42,6 +42,7 @@
             border: 1px solid #ddd;
             padding: 12px;
             text-align: left;
+            vertical-align: top;
         }
         th {
             background-color: #f2f2f2;
@@ -68,79 +69,86 @@
             color: #888;
             margin-top: 20px;
         }
-    
-        /* Perbaikan lebar kolom email */
-        td, th {
-            word-wrap: break-word;  /* Agar teks panjang seperti email tidak keluar dari kolom */
+        .email-column, .nik-column {
+            word-wrap: break-word;
+            white-space: normal;
         }
-    
-        .email-column {
-            width: 20%; /* Menetapkan lebar kolom email agar lebih pas */
-            white-space: normal;  /* Menghindari teks email terpotong */
+        .participant-table th, .participant-table td {
+            text-align: left;
+            vertical-align: middle;
+        }
+        .detail-table, .participant-table {
+            table-layout: fixed;
+        }
+        .detail-table th, .participant-table th, 
+        .detail-table td, .participant-table td {
+            width: calc(100% / 6); /* Membuat kolom memiliki lebar yang sama */
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h2>Laporan Jadwal Konseling</h2>
+        <h2>Laporan Jadwal Kegiatan</h2>
         <p>Tanggal: {{ $tanggal }}</p>
     </div>
 
     <div class="content">
-        <h3>Detail Jadwal</h3>
-        <table>
-            <tr>
-                <th>Nama Kegiatan</th>
-                <td>{{ $jadwal->NamaKegiatan }}</td>
-            </tr>
-            <tr>
-                <th>Nama Pemateri</th>
-                <td>{{ $jadwal->NamaBidan }}</td>
-            </tr>
-            <tr>
-                <th>Tanggal Kegiatan</th>
-                <td>{{ $tanggal }}</td>
-            </tr>
-            <tr>
-                <th>Jumlah Peserta</th>
-                <td>{{ $jumlah_peserta }}</td>
-            </tr>
-        </table>
+        @if($jadwal)
+            <h3>Detail Jadwal</h3>
+            <table class="detail-table">
+                <tr>
+                    <th>Nama Kegiatan</th>
+                    <td>{{ $jadwal->NamaKegiatan }}</td>
+                </tr>
+                <tr>
+                    <th>Nama Pemateri</th>
+                    <td>{{ $jadwal->NamaBidan }}</td>
+                </tr>
+                <tr>
+                    <th>Tanggal Kegiatan</th>
+                    <td>{{ $tanggal }}</td>
+                </tr>
+                <tr>
+                    <th>Jumlah Peserta</th>
+                    <td>{{ $jumlah_peserta }}</td>
+                </tr>
+            </table>
+        @else
+            <p>Data jadwal tidak ditemukan.</p>
+        @endif
 
         @if($jumlah_peserta > 0)
-        <h3>Daftar Peserta</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Nama</th>
-                    <th>NIK</th>
-                    {{-- <th>Tempat, Tanggal Lahir</th> --}}
-                    <th class="email-column">Email</th>
-                    <th>Jenis Kelamin</th>
-                    <th>Umur</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($pesertaKonselings as $index => $peserta)
-                @php
-                   $tanggalLahir = \Carbon\Carbon::parse($peserta->TanggalLahir);
-                   $umur = $tanggalLahir->diffInYears(\Carbon\Carbon::now());
-                @endphp
-                <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ $peserta->nama }}</td>
-                    <td>{{ $peserta->nik }}</td>                    
-                    <td class="email-column">{{ $peserta->email }}</td>
-                    {{-- <td>{{ $peserta->TempatLahir }}, {{ $peserta->TanggalLahir }}</td> --}}
-                    <td>{{ $peserta->JenisKelamin }}</td>
-                    <td>{{ $umur }} tahun</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+            <h3>Daftar Peserta</h3>
+            <table class="participant-table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th class="nik-column">NIK</th>
+                        <th class="email-column">Email</th>
+                        <th>Jenis Kelamin</th>
+                        <th>Umur</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($pesertaKonselings as $index => $peserta)
+                    @php
+                       $tanggalLahir = \Carbon\Carbon::parse($peserta->TanggalLahir);
+                       $umur = $tanggalLahir->diffInYears(\Carbon\Carbon::now());
+                    @endphp
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $peserta->nama }}</td>
+                        <td class="nik-column">{{ $peserta->nik }}</td>
+                        <td class="email-column">{{ $peserta->email }}</td>
+                        <td>{{ $peserta->JenisKelamin }}</td>
+                        <td>{{ $umur }} thn</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         @else
-        <p class="no-participants">Tidak ada peserta yang terdaftar untuk jadwal ini.</p>
+            <p class="no-participants">Tidak ada peserta yang terdaftar untuk jadwal ini.</p>
         @endif
 
         <div class="summary">
@@ -149,7 +157,7 @@
 
         <div class="footer">
             <p>Dicetak pada: {{ $created_at }}</p>
-            <p>&copy; {{ date('Y') }} Sistem Informasi Konseling</p>
+            <p>&copy; {{ date('Y') }} Sistem Informasi Kegiatan</p>
         </div>
     </div>
 </body>

@@ -103,33 +103,45 @@ class JadwalKonselingController extends Controller
     public function generatePdf($id)
     {
         $jadwal = DB::table('jadwalkonselings as a')
-        ->join('pesertakonselings as b', DB::raw('BINARY b.id_konselings'), '=', 'a.id')
-        ->join('dataremajas as c', 'c.nik', '=', 'b.nik')
+        ->leftJoin('pesertakonselings as b', DB::raw('BINARY b.id_konselings'), '=', 'a.id')
+        ->leftJoin('dataremajas as c', 'c.nik', '=', 'b.nik')
         ->select('a.id as id_konselings','a.*', 'b.*', 'c.TanggalLahir', 'c.TempatLahir', 'c.JenisKelamin')
         ->where('a.id', $id)
         ->first();
-
-        $jumlahPeserta = DB::table('pesertakonselings')
-        ->where('id_konselings', $jadwal->id_konselings)  
-        ->count();
-
-        $pesertaKonselings = DB::table('pesertakonselings as b')
-        ->join('dataremajas as c', 'c.nik', '=', 'b.nik')
-        ->where('b.id_konselings', $jadwal->id_konselings)
-        ->select('b.*', 'c.TanggalLahir', 'c.TempatLahir', 'c.JenisKelamin', 'b.email')
-        ->get();
-
+    
+        if ($jadwal) {
+            $jumlahPeserta = DB::table('pesertakonselings')
+                ->where('id_konselings', $jadwal->id_konselings)
+                ->count();
+        
+            $pesertaKonselings = DB::table('pesertakonselings as b')
+                ->leftJoin('dataremajas as c', 'c.nik', '=', 'b.nik')
+                ->where('b.id_konselings', $jadwal->id_konselings)
+                ->select('b.*', 'c.TanggalLahir', 'c.TempatLahir', 'c.JenisKelamin', 'b.email')
+                ->get();
+            $tanggal = Carbon::parse($jadwal->TanggalKegiatan)->isoFormat('D MMMM Y');
+        } else {
+            // Jika jadwal tidak ditemukan, atur nilai default
+            $jumlahPeserta = 0;
+            $pesertaKonselings = [];
+            $tanggal = null;  // Ganti menjadi null untuk menghindari error pada file name
+        }
+        
         $data = [
             'jadwal' => $jadwal,
             'pesertaKonselings' => $pesertaKonselings,
             'jumlah_peserta' => $jumlahPeserta,
-            'tanggal' => Carbon::parse($jadwal->TanggalKegiatan)->isoFormat('D MMMM Y'),
+            'tanggal' => $tanggal,
             'created_at' => now()->isoFormat('D MMMM Y')
         ];
-
-        $pdf = Pdf::loadView('admin.jadwalkonselingprint', $data);
-
-        return $pdf->download("jadwal_konseling_{$jadwal->id}.pdf");
+        
+        if ($jadwal) {
+            $pdf = Pdf::loadView('admin.jadwalkonselingprint', $data);
+            return $pdf->download("jadwal_konseling_{$jadwal->id}.pdf");
+        } else {
+            return redirect()->route('jadwalkonseling')->with('error', 'Jadwal tidak ditemukan.');
+        }
+    
     }
 
     public function deletedata($id)
