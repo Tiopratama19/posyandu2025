@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Dataremaja;
 use Illuminate\Http\Request;
-use App\Rules\NikValidation;
+use App\Rules\nikValidation;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\User;
@@ -35,20 +35,20 @@ class DataremajaController extends Controller
     public function insert(Request $request)
     {
         $request->validate([
-            'NIK' => ['required', new NikValidation()],
+            'nik' => ['required', new NikValidation()],
             'email' => 'required|email'
         ]);
 
-        $cek = Dataremaja::where('NIK', $request->NIK)->count();
+        $cek = Dataremaja::where('nik', $request->nik)->count();
         if($cek > 0)
         {
-            return redirect()->route('dataremaja')->with('success' , 'Nik sudah telah terdaftar');
+            return redirect()->route('dataremaja')->with('success' , 'nik sudah telah terdaftar');
         }
 
         $randomPassword = Str::random(8);
         $user = User::create([
             'name' => $request->Nama,
-            'nik' => $request->NIK,
+            'nik' => $request->nik,
             'email' => $request->email,
             'password' => Hash::make($randomPassword),
             'type' => 0,
@@ -81,8 +81,10 @@ class DataremajaController extends Controller
         $data = Dataremaja::find($id);
         $data->delete();
 
-        $user = User::where('nik', $data->NIK)->first();
-        $user->delete();
+        $user = User::where('nik', $data->nik)->first();
+        if(!empty($user)) {
+            $user->delete();
+        }
         
         return redirect()->route('dataremaja')->with('success' , 'Data Remaja telah dihapus');
     }
