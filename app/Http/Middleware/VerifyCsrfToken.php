@@ -14,5 +14,6 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         'tambahpeserta/*',
          'admin/dokumentasi/delete-selected',
+         'postLogin.*'
     ];
 }

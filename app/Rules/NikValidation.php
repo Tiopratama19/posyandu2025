@@ -15,14 +15,30 @@ class NikValidation implements Rule
      */
     public function passes($attribute, $value)
     {
-        // Check if the NIK has exactly 16 digits
+        // Pastikan NIK terdiri dari tepat 16 digit angka
         if (!preg_match('/^\d{16}$/', $value)) {
             return false;
         }
 
-        // Additional NIK validation logic (e.g., checksum, region codes) can be added here
+        // Validasi kode wilayah (4-6 digit pertama)
+        if (!$this->validateRegionCode(substr($value, 0, 6))) {
+            return false;
+        }
 
+        // Jika semua validasi lolos, kembalikan true
         return true;
+    }
+
+    /**
+     * Validasi kode wilayah berdasarkan pola yang fleksibel.
+     *
+     * @param  string  $regionCode
+     * @return bool
+     */
+    private function validateRegionCode($regionCode)
+    {
+        // Pola untuk kode wilayah Indonesia (contoh: mulai dari 11-94)
+        return preg_match('/^(1[1-9]|[2-9][0-9])\d{2,4}$/', $regionCode);
     }
 
     /**
@@ -32,6 +48,6 @@ class NikValidation implements Rule
      */
     public function message()
     {
-        return 'The :attribute must be a valid NIK.';
+        return 'The :attribute must be a valid NIK with 16 digits and a valid region code.';
     }
 }

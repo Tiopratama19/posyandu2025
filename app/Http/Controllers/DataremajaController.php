@@ -35,44 +35,60 @@ class DataremajaController extends Controller
 
     public function insert(Request $request)
     {
+        try {
 
-        $request->validate([
-            'nik' => ['required', new NikValidation()],
-            'email' => 'required|email|unique:users,email',
-        ], [
-            'nik.required' => 'NIK is required.',
-            'email.required' => 'Email is required.',
-            'email.email' => 'The email must be a valid email address.',
-            'email.unique' => 'The email is already taken.',
-        ]);
-
-        $cek = Dataremaja::where('nik', $request->nik)->count();
-        if ($cek > 0) {
-            return redirect()->route('dataremaja')->with('success', 'nik sudah telah terdaftar');
+            $request->validate([
+                'nik' => ['required', new NikValidation()],
+                'email' => 'required|email|unique:users,email',
+            ], [
+                'nik.required' => 'NIK is required.',
+                'email.required' => 'Email is required.',
+                'email.email' => 'The email must be a valid email address.',
+                'email.unique' => 'The email is already taken.',
+            ]);
+            
+            // Cek apakah NIK sudah terdaftar
+            $cek = Dataremaja::where('nik', $request->nik)->exists();
+            if ($cek) {
+                return redirect()->route('dataremaja')->with('error', 'NIK sudah terdaftar.');
+            }
+            
+            // Generate password random
+            $randomPassword = Str::random(8);
+            
+            // Buat user baru
+            $user = User::create([
+                'name' => $request->Nama,
+                'nik' => $request->nik,
+                'email' => $request->email,
+                'password' => Hash::make($randomPassword),
+                'type' => 0,
+            ]);
+            
+            // Kirim email selamat datang
+            try {
+                Mail::to($request->email)->send(new WelcomeMail($randomPassword));
+            } catch (\Exception $e) {
+                return redirect()->route('dataremaja')->with('error', 'Gagal mengirim email. Silakan coba lagi.');
+            }
+            
+            // Simpan data remaja
+            $data = Dataremaja::create([
+                'nik' => $request->nik,
+                'email' => $request->email,
+                'Nama' => $request->Nama,
+                'TempatLahir' => $request->TempatLahir,
+                'TanggalLahir' => $request->TanggalLahir,
+                'JenisKelamin' => $request->JenisKelamin,
+            ]);
+            
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->route('dataremaja')->with('error', 'Email sudah terdaftar.');
         }
-
-        $randomPassword = Str::random(8);
-        $user = User::create([
-            'name' => $request->Nama,
-            'nik' => $request->nik,
-            'email' => $request->email,
-            'password' => Hash::make($randomPassword),
-            'type' => 0,
-        ]);
-
-        Mail::to($request->email)->send(new WelcomeMail($randomPassword));
-
-        $data = Dataremaja::create([
-            'nik' => $request->nik,
-            'email' => $request->email,
-            'Nama' => $request->Nama,
-            'TempatLahir' => $request->TempatLahir,
-            'TanggalLahir' => $request->TanggalLahir,
-            'JenisKelamin' => $request->JenisKelamin,
-
-        ]);
-
-        return redirect()->route('dataremaja')->with('success', 'Data Remaja telah ditambahkan');
+        
+        return redirect()->route('dataremaja')->with('success', 'Data berhasil ditambahkan');
+    
+        
     }
 
     public function tampildata($id)
