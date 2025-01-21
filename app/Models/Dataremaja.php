@@ -9,18 +9,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Dataremaja extends Model
 {
     use HasFactory;
-    protected $fillable= [
-        'NIK', 'email', 'Nama', 'TempatLahir', 'TanggalLahir', 'JenisKelamin'
-    ];
+
+    protected $guarded = [];
 
     public static function rules($id = null)
     {
         return [
-            'NIK' => 'required|unique:Dataremaja,NIK'. $id,
-            'email' => 'required|unique:Dataremaja,email'. $id,
-            'Nama' => 'required|unique:Dataremaja,Nama'. $id,
+            'nik' => 'required|unique:Dataremaja,nik' . $id,
+            'email' => 'required|unique:Dataremaja,email' . $id,
+            'Nama' => 'required|unique:Dataremaja,Nama' . $id,
             'TempatLahir' => 'required|unique:Dataremaja,TempatLahir' . $id,
-            'TanggalLahir' => 'required|unique:Dataremaja,TanggalLahir'. $id,
+            'TanggalLahir' => 'required|unique:Dataremaja,TanggalLahir' . $id,
             'JenisKelamin' => 'required|unique:Dataremaja,JenisKelamin' . $id,
         ];
     }

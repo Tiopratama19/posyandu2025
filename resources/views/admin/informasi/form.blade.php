@@ -58,30 +58,27 @@
                                                     value="{{ old('judul', $item->judul ?? '') }}"
                                                     id="example-search-input">
                                             </div>
+
+
                                             <div class="mb-3">
-                                                <label for="example-search-input" class="form-label">Jenis Informasi</label>
-                                                <select name="jenis" id="jenis" class="form-select" onchange="filterOptions()" disabled>
-                                                    <option value="">Silakan Pilih</option>
-                                                    @foreach (['kegiatan', 'edukasi'] as $option)
-                                                        <option value="{{ $option }}" @selected($option == ($item->jenis ?? ''))>
-                                                            {{ Str::title($option) }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                                {{-- <label for="example-search-input" class="form-label">Jenis</label> --}}
+                                                <input class="form-control" name="jenis" type="hidden" value="edukasi"
+                                                    id="example-search-input">
                                             </div>
-                                            
+
                                             <div class="mb-3">
                                                 <label for="kategori" class="form-label">Kategori</label>
                                                 <select name="kategori_id" id="kategori" class="form-select">
                                                     <option value="">Pilih Kategori</option>
                                                     @foreach ($form['kategori'] as $d)
-                                                        <option value="{{ $d->id }}" data-jenis="{{ $d->jenis }}" @selected($d->id == ($item->kategori_id ?? ''))>
+                                                        <option value="{{ $d->id }}" data-jenis="{{ $d->jenis }}"
+                                                            @selected($d->id == ($item->kategori_id ?? ''))>
                                                             {{ $d->nama }}
                                                         </option>
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="mb-3">
+                                            {{-- <div class="mb-3">
                                                 <label for="example-text-input" class="form-label">Tanggal Mulai</label>
                                                 <input class="form-control" name="start_date" type="date"
                                                     value="{{ old('start_date', $item->start_date ?? '') }}"
@@ -92,7 +89,7 @@
                                                 <input class="form-control" name="end_date" type="date"
                                                     value="{{ old('end_date', $item->end_date ?? '') }}"
                                                     id="example-text-input">
-                                            </div>
+                                            </div> --}}
                                             <div class="mb-3">
                                                 <label for="example-text-input" class="form-label">Deskripsi</label>
                                                 <textarea class="form-control" id="deskripsi" placeholder="Enter the deskripsi" rows="5" name="deskripsi">{{ old('deskripsi', $item->deskripsi ?? '') }}</textarea>
@@ -156,30 +153,30 @@
                 console.error(error);
             });
 
-            function filterOptions() {
-                var selectedJenis = document.getElementById("jenis").value;
-                var kategoriSelect = document.getElementById("kategori");
-                
-                // Loop through options and show/hide based on the selected "jenis"
-                for (var i = 0; i < kategoriSelect.options.length; i++) {
-                    var option = kategoriSelect.options[i];
-                    if (option.getAttribute("data-jenis") === selectedJenis || option.value === "") {
-                        option.style.display = "";
-                    } else {
-                        option.style.display = "none";
-                    }
+        function filterOptions() {
+            var selectedJenis = document.getElementById("jenis").value;
+            var kategoriSelect = document.getElementById("kategori");
+
+            // Loop through options and show/hide based on the selected "jenis"
+            for (var i = 0; i < kategoriSelect.options.length; i++) {
+                var option = kategoriSelect.options[i];
+                if (option.getAttribute("data-jenis") === selectedJenis || option.value === "") {
+                    option.style.display = "";
+                } else {
+                    option.style.display = "none";
                 }
-                
-                // Reset the selection if the selected option is hidden
-                kategoriSelect.value = "";
             }
 
-            
-                                            
-            window.onload = function() {
+            // Reset the selection if the selected option is hidden
+            kategoriSelect.value = "";
+        }
+
+
+
+        window.onload = function() {
             const jenisSelect = document.getElementById('jenis');
             if (!jenisSelect.value) {
-                jenisSelect.value = 'edukasi';  // Menetapkan 'edukasi' sebagai default jika belum dipilih
+                jenisSelect.value = 'edukasi'; // Menetapkan 'edukasi' sebagai default jika belum dipilih
             }
         }
     </script>

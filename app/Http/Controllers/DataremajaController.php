@@ -12,6 +12,7 @@ use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Hash;
+
 class DataremajaController extends Controller
 {
     public function index()
@@ -44,11 +45,10 @@ class DataremajaController extends Controller
             'email.email' => 'The email must be a valid email address.',
             'email.unique' => 'The email is already taken.',
         ]);
-        
+
         $cek = Dataremaja::where('nik', $request->nik)->count();
-        if($cek > 0)
-        {
-            return redirect()->route('dataremaja')->with('success' , 'nik sudah telah terdaftar');
+        if ($cek > 0) {
+            return redirect()->route('dataremaja')->with('success', 'nik sudah telah terdaftar');
         }
 
         $randomPassword = Str::random(8);
@@ -62,9 +62,17 @@ class DataremajaController extends Controller
 
         Mail::to($request->email)->send(new WelcomeMail($randomPassword));
 
-        $data = Dataremaja::create($request->all());
+        $data = Dataremaja::create([
+            'nik' => $request->nik,
+            'email' => $request->email,
+            'Nama' => $request->Nama,
+            'TempatLahir' => $request->TempatLahir,
+            'TanggalLahir' => $request->TanggalLahir,
+            'JenisKelamin' => $request->JenisKelamin,
 
-        return redirect()->route('dataremaja')->with('success' , 'Data Remaja telah ditambahkan');
+        ]);
+
+        return redirect()->route('dataremaja')->with('success', 'Data Remaja telah ditambahkan');
     }
 
     public function tampildata($id)
@@ -74,12 +82,12 @@ class DataremajaController extends Controller
         return view('admin.tampildata', compact('data'));
     }
 
-    public function updatedata(Request $request,$id)
+    public function updatedata(Request $request, $id)
     {
         $data = Dataremaja::find($id);
         $data->update($request->all());
 
-        return redirect()->route('dataremaja')->with('success' , 'Data Remaja telah diubah');
+        return redirect()->route('dataremaja')->with('success', 'Data Remaja telah diubah');
     }
 
     public function deletedata($id)
@@ -91,46 +99,40 @@ class DataremajaController extends Controller
         if ($user && $user->id !== auth()->id()) {
             $user->delete();
         }
-        return redirect()->route('dataremaja')->with('success' , 'Data Remaja telah dihapus');
+        return redirect()->route('dataremaja')->with('success', 'Data Remaja telah dihapus');
     }
 
     function filterGetDataRemaja(Request $request)
     {
-        if(request()->ajax())
-        {
-         if(!empty($request->from_date))
-         {
-            $dateTime = Carbon::createFromFormat('F', $request->from_date);
-            $monthNumber = $dateTime->format('n');
+        if (request()->ajax()) {
+            if (!empty($request->from_date)) {
+                $dateTime = Carbon::createFromFormat('F', $request->from_date);
+                $monthNumber = $dateTime->format('n');
 
-            $dateTime2 = Carbon::createFromFormat('F', $request->to_date);
-            $monthNumber2 = $dateTime->format('n');
-            $data = DB::table('dataremajas')
-                ->whereMonth('created_at', '>=', $monthNumber)
-                ->whereMonth('created_at', '<=', $monthNumber2)
-                ->get();
-         }
-         else
-         {
-            $data = DB::table('dataremajas')->get();
-         }
-         return DataTables()->of($data)
-         ->addIndexColumn()
-         ->addColumn('action', function($data){
-            return '<a href="/admin/tampildata/"'.$data->id.'" class="btn btn-info">Edit</a>&nbsp;
+                $dateTime2 = Carbon::createFromFormat('F', $request->to_date);
+                $monthNumber2 = $dateTime->format('n');
+                $data = DB::table('dataremajas')
+                    ->whereMonth('created_at', '>=', $monthNumber)
+                    ->whereMonth('created_at', '<=', $monthNumber2)
+                    ->get();
+            } else {
+                $data = DB::table('dataremajas')->get();
+            }
+            return DataTables()->of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($data) {
+                    return '<a href="/admin/tampildata/"' . $data->id . '" class="btn btn-info">Edit</a>&nbsp;
             <a href="/admin/riwayat/{{ $row->id }}" class="btn btn-primary">Riwayat</a>&nbsp;
-            <a href="#" class="btn btn-danger delete" data-id="'.$data->id.'"
-                data-nama="'.$data->Nama.'" >Hapus</a>';
+            <a href="#" class="btn btn-danger delete" data-id="' . $data->id . '"
+                data-nama="' . $data->Nama . '" >Hapus</a>';
+                })
+                ->addColumn('TanggalLahir', function ($data) {
+                    return Carbon::parse($data->TanggalLahir)->isoFormat('D MMMM YYYY');
+                })
 
-              })
-             ->addColumn('TanggalLahir', function($data){
-                return Carbon::parse($data->TanggalLahir)->isoFormat('D MMMM YYYY');
-             })
-
-             ->rawColumns(['action', 'TanggalLahir'])
-             ->make(true);
+                ->rawColumns(['action', 'TanggalLahir'])
+                ->make(true);
         }
         return view('admin.dataremaja');
     }
-
 }

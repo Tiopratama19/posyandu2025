@@ -40,7 +40,7 @@
                         <div class="card-header">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <h4 class="card-title">Tabel dan Edukasi</h4>
+                                    <h4 class="card-title">Tabel Edukasi</h4>
                                     <p class="card-title-desc">Daftar proker dan informasi.
                                     </p>
                                 </div>
@@ -56,106 +56,42 @@
                             </div>
                         @endif
                         <div class="card-body">
-                            <ul class="nav nav-tabs" role="tablist">
-                                {{-- <li class="nav-item" role="presentation">
-                                    <a class="nav-link active" id="simple-tab-0" data-bs-toggle="tab"
-                                        href="#simple-tabpanel-0" role="tab" aria-controls="simple-tabpanel-0"
-                                        aria-selected="true">Kegiatan</a>
-                                </li> --}}
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="simple-tab-1" data-bs-toggle="tab" href="#simple-tabpanel-1"
-                                        role="tab" aria-controls="simple-tabpanel-1" aria-selected="false">Edukasi</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content pt-5" id="tab-content">
-                                <div class="tab-pane active" id="simple-tabpanel-0" role="tabpanel"
-                                    aria-labelledby="simple-tab-0">
-                                    <table id="datatable"
-                                        class="table table-striped nowrap dt-responsive nowrap w-100 display nowrap"
-                                        style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Poto</th>
-                                                <th>Tanggal</th>
-                                                <th>Kegiatan</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @php
-                                                $no = 1;
-                                            @endphp
-                                            @foreach ($data as $index => $row)
-                                                @if ($row->jenis == 'kegiatan')
-                                                    <tr>
-                                                        <th scope="row">{{ $no++ }}</th>
-                                                        <td><img src="{{ asset('storage/' . str_replace('public/', '', $row->galeri)) }}"
-                                                                style="height: 100px; width:100px;"></td>
-                                                        <td>{{ $row->start_date }}</td>
-                                                        <td>{{ $row->judul }}</td>
-                                                        <td>
-                                                            <form action="{{ route('informasi.destroy', $row->id) }}"
-                                                                method="post">
-                                                                @method('DELETE')
-                                                                @csrf
-                                                                <a href="{{ route('informasi.peserta', $row->id) }}"
-                                                                    class="btn btn-warning">Peserta</a>
-                                                                <a href="{{ route('informasi.edit', $row->id) }}"
-                                                                    class="btn btn-info">Edit</a>
-                                                                <button type="submit"
-                                                                    class="btn btn-danger delete">Hapus</button>
-                                                            </form>
-                                                        </td>
-                                                    </tr>
-                                                @endif
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="tab-pane" id="simple-tabpanel-1" role="tabpanel" aria-labelledby="simple-tab-1">
-                                    <table id="datatable2" class="table table-striped nowrap" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Poto</th>
-                                                <th>Edukasi</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                            <table id="datatable2" class="table table-striped nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Poto</th>
+                                        <th>Edukasi</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                                            @php
-                                                $no = 1;
-                                            @endphp
-                                            @foreach ($data as $index => $row)
-                                                @if ($row->jenis == 'edukasi')
-                                                    <tr>
-                                                        <th scope="row">{{ $no++ }}</th>
-                                                        <td><img src="{{ asset('storage/' . str_replace('public/', '', $row->galeri)) }}"
-                                                                style="height: 100px; width:100px;"></td>
-                                                        <td>{{ $row->judul }}</td>
+                                    @php
+                                        $no = 1;
+                                    @endphp
+                                    @foreach ($data as $row)
+                                        <tr>
+                                            <th scope="row">{{ $no++ }}</th>
+                                            <td>
+                                                <img src="{{ asset('storage/' . str_replace('public/', '', $row->galeri)) }}"
+                                                    style="height: 100px; width:100px;">
+                                            </td>
+                                            <td>{{ $row->judul }}</td>
+                                            <td>
+                                                <form action="{{ route('informasi.destroy', $row->id) }}" method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <a href="{{ route('informasi.edit', $row->id) }}"
+                                                        class="btn btn-info">Edit</a>
+                                                    <button type="submit" class="btn btn-danger delete">Hapus</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
 
-                                                        <td>
-                                                            <form action="{{ route('informasi.destroy', $row->id) }}"
-                                                                method="post">
-                                                                @method('DELETE')
-                                                                @csrf
-                                                                <a href="{{ route('informasi.edit', $row->id) }}"
-                                                                    class="btn btn-info">Edit</a>
-                                                                <button type="submit"
-                                                                    class="btn btn-danger delete">Hapus</button>
-                                                            </form>
-                                                        </td>
-                                                    </tr>
-                                                @endif
-                                            @endforeach
-                                        </tbody>
-
-                                    </table>
-                                </div>
-
-                            </div>
+                            </table>
                         </div>
                     </div>
                     <!-- end cardaa -->
@@ -221,7 +157,7 @@
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location = "/admin/deleteproker/" + prokerid + ""
+                    window.location = "/admin/informasi/delete/" + prokerid + ""
                     swalWithBootstrapButtons.fire(
                         'Dihapus!',
                         'Filemu berhasil dihapus.',

@@ -59,16 +59,16 @@
                                                     id="example-email-input">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="example-email-input" class="form-label">Tablet Tambah
-                                                    Darah</label>
-                                                <select class="form-select" name="TTD" aria-label="TTD">
-                                                    <option selected>Tablet Tambah Darah</option>
-                                                    <option value="Udah">Udah</option>
-                                                    <option value="Belum">Belum</option>
-                                                </select>
-                                                {{-- <input class="form-control" name="TTD" type="text" value="{{$data->TTD}}"
-                                            id="example-email-input"> --}}
+                                                <label for="ttd" class="form-label">Tensi</label>
+                                                <input id="ttd"
+                                                    class="form-control {{ $errors->has('ttd') ? 'is-invalid' : '' }}"
+                                                    name="ttd" type="text" value="{{ old('ttd') }}"
+                                                    value="{{ $data->TTD }}">
+                                                @error('ttd')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
                                             </div>
+
                                             <div class="mb-3">
                                                 <label for="example-email-input" class="form-label">Lingkar Lengan
                                                     Atas</label>
@@ -83,9 +83,10 @@
                                                     id="example-email-input">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="anemia" class="form-label">RIWAYAT PENYAKIT</label>
-                                                <input id="anemia" class="form-control" name="anemia" type="text" value="{{ $data->Anemia }}">
-                                              
+                                                <label for="anemia" class="form-label">Keluhan</label>
+                                                <input id="anemia" class="form-control" name="anemia" type="text"
+                                                    value="{{ $data->Anemia }}">
+
                                             </div>
                                             <span style="float:right">
                                                 <button type="Submit" class="btn btn-success">Submit</button>

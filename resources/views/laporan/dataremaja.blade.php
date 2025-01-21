@@ -74,7 +74,7 @@
             </tr>
             <tr>
                 <td>NIK</td>
-                <td>{{ $remaja->NIK }}</td>
+                <td>{{ $remaja->nik }}</td>
             </tr>
             <tr>
                 <td>Tgl. Lahir</td>
@@ -105,7 +105,7 @@
                 <td>{{ $remaja->LP }}</td>
             </tr>
             <tr>
-                <td>RIWAYAT PENYAKIT</td>
+                <td>Keluhan</td>
                 <td>{{ $remaja->Anemia }}</td>
             </tr>
         </table>

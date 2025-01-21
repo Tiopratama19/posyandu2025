@@ -139,8 +139,8 @@
 
     <script src="{{ URL::to('alert/js/sweetalert.js') }}"></script>
     <script>
-        const userRole = "{{ auth()->check() ? auth()->user()->type : 'guest' }}"; 
-       
+        const userRole = "{{ auth()->check() ? auth()->user()->type : 'guest' }}";
+
         if (userRole === 'user') {
             $('#nav_section3').show();
             $('#section_3').show();
@@ -152,7 +152,7 @@
             $('#nav_section5').hide();
             $('#section_5').hide();
         }
-        document.getElementById('loginButton').addEventListener('click', function () {
+        document.getElementById('loginButton').addEventListener('click', function() {
             let userIP = '';
 
             fetch('https://api.ipify.org?format=json')
@@ -162,7 +162,7 @@
                 })
                 .catch(error => console.error('Error fetching IP:', error));
 
-            
+
             Swal.fire({
                 title: 'Pilih Jenis Login',
                 text: 'Apakah Anda ingin login sebagai admin?',
@@ -210,21 +210,6 @@
                 }
             });
         });
-
-        const dropdownToggle = document.getElementById('userDropdown');
-        const dropdownMenu = dropdownToggle.nextElementSibling;
-
-        dropdownToggle.addEventListener('click', function (event) {
-            event.stopPropagation(); 
-            dropdownMenu.classList.toggle('show');
-        });
-
-        document.addEventListener('click', function (event) {
-            if (!dropdownToggle.contains(event.target)) {
-                dropdownMenu.classList.remove('show');
-            }
-        });
-
     </script>
 </body>
 

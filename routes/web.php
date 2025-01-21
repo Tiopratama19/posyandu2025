@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Master\CounselingController;
@@ -119,6 +120,8 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
 
         Route::get('/informasi/{id}/anggota', [InformasiController::class, 'peserta'])->name('informasi.peserta');
+        Route::get('/informasi/delete/{id}/', [InformasiController::class, 'destroy'])->name('informasi.delete');
+
         Route::resource('informasi', InformasiController::class);
         Route::resource('anggota', AnggotaController::class);
 

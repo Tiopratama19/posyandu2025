@@ -61,13 +61,12 @@
         .login-footer a:hover {
             text-decoration: underline;
         }
-
     </style>
 </head>
 
 <body>
     <div class="login-container">
-        <h2 class="text-center">Login</h2>
+        <h2 class="text-center">Ganti Password</h2>
         <form id="change-password-form">
             <div class="mb-3">
                 <label for="oldPassword" class="form-label">Password Lama</label>
@@ -90,63 +89,62 @@
     <script src="{{ url('/') }}/fe/js/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ URL::to('alert/js/sweetalert.js') }}"></script>
-    
-<script>
-    document.getElementById('change-password-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-    
-        var oldPassword = document.getElementById('oldPassword').value;
-        var newPassword = document.getElementById('newPassword').value;
-        var confirmNewPassword = document.getElementById('confirmNewPassword').value;
-    
-        if (newPassword !== confirmNewPassword) {
-            alert('Password baru dan konfirmasi password tidak cocok.');
-            return;
-        }
-    
-        fetch('/change-password', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({
-                oldPassword: oldPassword,
-                newPassword: newPassword,
-                newPassword_confirmation: confirmNewPassword // Untuk validasi 'confirmed'
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil',
-                    text: 'Password berhasil diubah.',
-                    confirmButtonText: 'OK'
-                });
-                window.location.href='/';
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal',
-                    text: 'Gagal mengubah password: ' + data.message,
-                    confirmButtonText: 'OK'
-                });
+
+    <script>
+        document.getElementById('change-password-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var oldPassword = document.getElementById('oldPassword').value;
+            var newPassword = document.getElementById('newPassword').value;
+            var confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+            if (newPassword !== confirmNewPassword) {
+                alert('Password baru dan konfirmasi password tidak cocok.');
+                return;
             }
-        })
-        .catch(error => {
-            Swal.fire({
-                icon: 'error',
-                title: 'Kesalahan',
-                text: 'Terjadi kesalahan: ' + error,
-                confirmButtonText: 'OK'
-            });
+
+            fetch('/change-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        oldPassword: oldPassword,
+                        newPassword: newPassword,
+                        newPassword_confirmation: confirmNewPassword // Untuk validasi 'confirmed'
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: 'Password berhasil diubah.',
+                            confirmButtonText: 'OK'
+                        });
+                        window.location.href = '/';
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: 'Gagal mengubah password: ' + data.message,
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Kesalahan',
+                        text: 'Terjadi kesalahan: ' + error,
+                        confirmButtonText: 'OK'
+                    });
+                });
+
         });
-    
-    });
     </script>
 </body>
 
 </html>
-

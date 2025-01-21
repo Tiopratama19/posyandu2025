@@ -41,7 +41,7 @@
                                 <h4 class="card-title">Tabel Data Detail {{ $dataremaja->Nama }}</h4>
                                 <p class="card-title-desc">Pastikan data yang dimasukkan itu sudah tepat dan benar.</p>
                                 <div class="d-flex justify-content-end gap-2">
-                                    <a href="{{ route('dataremaja.Detail-create', $dataremaja->id) }}"
+                                    <a href="{{ route('dataremaja.riwayat-create', $dataremaja->id) }}"
                                         class="btn btn-primary">Tambah Data</a>
                                     <a href="/admin/dataremaja" class="btn btn-danger">Kembali</a>
                                 </div>
@@ -63,7 +63,7 @@
                                             <th>Tensi</th>
                                             <th>LILA</th>
                                             <th>LP</th>
-                                            <th>Detail Penyakit</th>
+                                            <th>Keluhan</th>
                                             <th width="230px">Aksi</th>
                                         </tr>
                                     </thead>
@@ -78,9 +78,9 @@
                                             <td>{{ $row->LP }} cm</td>
                                             <td>{{ $row->Anemia }}</td>
                                             <td>
-                                                <a href="/admin/tampilDetail/{{ $row->id }}"
+                                                <a href="/admin/tampilriwayat/{{ $row->id }}"
                                                     class="btn btn-info">Edit</a>
-                                                <a href="/admin/deleteDetail/{{ $row->id }}"
+                                                <a href="/admin/deleteriwayat/{{ $row->id }}"
                                                     class="btn btn-danger delete" data-id="{{ $row->id }}"
                                                     data-nama="{{ $row->Nama }}">Hapus</a>
                                             </td>

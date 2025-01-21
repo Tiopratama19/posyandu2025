@@ -10,7 +10,7 @@ class InformasiController extends Controller
 {
     public function index()
     {
-        $data = Informasi::get();
+        $data = Informasi::where('jenis', 'edukasi')->get();
         return view("admin.informasi.index", compact("data"));
     }
 
@@ -20,7 +20,7 @@ class InformasiController extends Controller
             'title' => 'Tambah Informasi',
             'action' => route('informasi.store'),
             'method' => 'POST',
-            'kategori' => Kategori::all()
+            'kategori' => Kategori::where('jenis', 'edukasi')->get()
         ];
 
 
@@ -58,11 +58,10 @@ class InformasiController extends Controller
 
     public function store(Request $request)
     {
+
         $validated = $request->validate([
             'judul' => 'required',
             'jenis' => 'required',
-            'start_date' => 'nullable',
-            'end_date' => 'nullable',
             'deskripsi' => 'required',
             'galeri' => 'required',
             'kategori_id' => 'required'

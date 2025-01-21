@@ -61,7 +61,8 @@
     }
 
     .dropdown-toggle::after {
-        content: '\f0d7';  /* Arrow down icon */
+        content: '\f0d7';
+        /* Arrow down icon */
         font-family: "Font Awesome 5 Free";
         font-weight: 900;
         padding-left: 5px;
@@ -137,29 +138,48 @@
                 <li class="nav-item"><a class="nav-link" href="#section_2">Edukasi</a></li>
                 <li class="nav-item"><a class="nav-link" href="#section_3" id="nav_section3">Jadwal Kegiatan</a></li>
                 <li class="nav-item"><a class="nav-link" href="#section_4">Informasi Anggota</a></li>
-                <li class="nav-item"><a class="nav-link" href="#section_5" id="nav_section5">Dokumentasi Kegiatan</a></li>
+                <li class="nav-item"><a class="nav-link" href="#section_5" id="nav_section5">Dokumentasi Kegiatan</a>
+                </li>
                 <li class="nav-item"><a class="nav-link" href="#section_6">Tentang Kami</a></li>
                 <li class="nav-item"><a class="nav-link" href="#section_7">Kontak</a></li>
             </ul>
 
             <!-- Tombol Masuk atau Dropdown -->
-            @if(auth()->check() && auth()->user()->type === 'user')
-            <div class="dropdown">
-                <button class="btn btn-outline-light dropdown-toggle" type="button" id="userDropdown"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    Halo, {{ auth()->user()->name }}
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="{{ url('change-password') }}">Ganti Password <i class="bi bi-key"></i></a></li>
-                    <li><a class="dropdown-item" href="{{ url('logout') }}">Logout <i class="bi bi-box-arrow-in-right"></i></a></li>
-                </ul>
-            </div>
+            @if (auth()->check() && auth()->user()->type === 'user')
+                <div class="dropdown">
+                    <button class="btn btn-outline-light dropdown-toggle" type="button" id="userDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Halo, {{ auth()->user()->name }}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="{{ url('change-password') }}">Ganti Password <i
+                                    class="bi bi-key"></i></a></li>
+                        <li><a class="dropdown-item" href="{{ url('logout') }}">Logout <i
+                                    class="bi bi-box-arrow-in-right"></i></a></li>
+                    </ul>
+                </div>
             @else
-            <button id="loginButton" class="btn btn-outline-light">
-                Masuk <i class="bi bi-box-arrow-in-right"></i>
-            </button>
+                <button id="loginButton" class="btn btn-outline-light">
+                    Masuk <i class="bi bi-box-arrow-in-right"></i>
+                </button>
             @endif
 
         </div>
     </div>
 </nav>
+
+<script>
+    const dropdownToggle = document.getElementById('userDropdown');
+    const dropdownMenu = dropdownToggle.nextElementSibling;
+
+    dropdownToggle.addEventListener('click', function(event) {
+        event.stopPropagation();
+        dropdownMenu.classList.toggle('show');
+    });
+
+    document.addEventListener('click', function(event) {
+        if (!dropdownToggle.contains(event.target)) {
+            dropdownMenu.classList.remove('show');
+        }
+    });
+</script>
